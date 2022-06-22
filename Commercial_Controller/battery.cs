@@ -7,8 +7,8 @@ namespace Commercial_Controller
     { 
     public int ID;
     public string status;
-    public List<int> columnsList;
-    public List<int> floorRequestsButtonsList;
+    public List<Column> columnsList;
+    public List<FloorRequestButton> floorRequestsButtonsList;
  
     // public void IF (int amountOfBasements > 0);    
     // public void createFloorRequestButtons(int amountOfFloors);
@@ -22,8 +22,8 @@ namespace Commercial_Controller
         {             
             this.ID = _id;
             this.status = "online";
-            this.columnsList = new List<int>();
-            this.floorRequestsButtonsList = new List<int>();
+            this.columnsList = new List<Column>();
+            this.floorRequestsButtonsList = new List<FloorRequestButton>();
     
 //             IF (_amountOfBasements > 0);
 //             {
