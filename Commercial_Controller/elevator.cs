@@ -15,9 +15,9 @@ namespace Commercial_Controller
         public bool overweight;
         public bool obstruction;
         public int screenDisplay;
-        public Elevator(int _id, string _status, int _amountOfFloors, int _currentFloor, int _elevatorID)
+        public Elevator(int _id, string _status, int _amountOfFloors, int _currentFloor)
         {
-            this.ID = _id;
+            this.ID = 1;
             this.status = _status;
             this.amountOfFloors = _amountOfFloors;
             this.currentFloor = _currentFloor;
@@ -114,15 +114,5 @@ namespace Commercial_Controller
                 this.direction = "down";
             }
         }
-
-
-
-
-
-
-
-
-
-
     }
 }

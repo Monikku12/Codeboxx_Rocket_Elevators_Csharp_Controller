@@ -36,15 +36,33 @@ namespace Commercial_Controller
 
         }
 
-        // public Column findBestColumn(int _requestedFloor)
-        // {
-            
-        // }
-        // //Simulate when a user press a button at the lobby
-        // public (Column, Elevator) assignElevator(int _requestedFloor, string _direction)
-        // {
-            
-        // }
+
+
+        public 
+
+        public Column findBestColumn(int _requestedFloor)
+        {
+            foreach (column in this.columnsList)
+            {
+                if (column.servedFloorList.contains(_requestedFloor))
+                {
+                    return column;
+                }
+            }
+        }
+
+        //Simulate when a user press a button at the lobby
+        public (Column, Elevator) assignElevator(int _requestedFloor, string requestedDirection)
+        {
+            column = this.findBestColumn(_requestedFloor);
+            Elevator elevator = Column.findElevator(1, requestedDirection); // The floor is always 1 because that request is always made from the lobby.
+            elevator.addNewRequest(1);
+            elevator.move();
+            elevator.addNewRequest(_requestedFloor);
+            elevator.move();
+            return column;
+            return bestElevator;
+        }
     }
 }
 

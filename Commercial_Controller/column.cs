@@ -13,12 +13,10 @@ namespace Commercial_Controller
         public List<CallButton> callButtonsList;
         public List<int> servedFloorsList;
         public bool isBasement;
-        // public void createElevators(int amountOfFloors, int amountOfElevators);
-        // public void createElevators(int amountOfFloors, bool isBasement);
-
+        
         public Column(int _id, string _status, int _amountOfFloors, int _amountOfElevators, List<int> _servedFloors, bool _isBasement)
         {
-            this.ID = _id;
+            this.ID = 1;
             this.status = _status;
             this.amountOfFloors = _amountOfFloors;
             this.amountOfElevators = _amountOfElevators;
@@ -26,47 +24,55 @@ namespace Commercial_Controller
             this.callButtonsList = new List<CallButton>();
             this.servedFloorsList = _servedFloors;
             this.isBasement = _isBasement;
-            // this.createElevators(_amountOfFloors, _amountOfElevators);
-            // this.createCallButtons(_amountOfFloors, _isBasement);
-            // this.requestElevator(int userPosition, string direction)
+            this.createElevators(_amountOfFloors, _amountOfElevators);
+            this.createCallButtons(_amountOfFloors, _isBasement);
         }
 
-        public CallButton createCallButtons(int _amountOfFloors, bool _isBasement)
+        public void createCallButtons(int _amountOfFloors, bool _isBasement)
         {
             if (_isBasement)
             {
-                int floor = -1;
-                for (_amountOfFloors)
+                int buttonFloor = -1;
+                for (int i = 0; i < _amountOfFloors; i++)
                 {
-                    CallButton callButton = new CallButton(callButtonsId, "OFF", floor, "Up");
+                    CallButton callButton = new CallButton(i + 1, "OFF", buttonFloor, "Up");
                     this.callButtonsList.Add(callButton);
-                    floor--;
-                    callButtonsId++;
+                    buttonFloor--;
                 }
             }
             else
             {
-                int floor = 1;
-                for (_amountOfFloors)
+                int buttonFloor = 1;
+                for (int i = 0; i < _amountOfFloors; i++)
                 {
-                    CallButton callButton = new CallButton(1, "OFF", floor, "Down");
+                    CallButton callButton = new CallButton(i + 1, "OFF", buttonFloor, "Down");
                     this.callButtonsList.Add(callButton);
                     buttonFloor++;
-                    callButtonId++;
                 }
             }
         }
 
-
-        // public createElevators(_amountOfFloors, _amountOfElevators)
+        public void createElevators(int _amountOfFloors, int _amountOfElevators)
+        {
+            for (int i = 0; i < _amountOfElevators; i++)
+            {
+                Elevator elevator = new Elevator(i + 1, "idle", _amountOfFloors, 1);
+                this.elevatorsList.Add(elevator);
+            }
+        }
 
 
         
         // Simulate when a user press a button on a floor to go back to the first floor
-        // public Elevator requestElevator(int userPosition, string direction)
-        // {
-            
-        // }
+        public Elevator requestElevator(int userPosition, string direction)
+        {
+            Elevator elevator = this.findElevator(userPosition, direction);
+            elevator.addNewRequest(userPosition);
+            elevator.move();
+            elevator.addNewRequest(1); //Always 1 because the user can only go back to the lobby
+            elevator.move();
+            return elevator;
+        }
 
         //We use a score system depending on the current elevators state. Since the bestScore and the referenceGap are
         //higher values than what could be possibly calculated, the first elevator will always become the default bestElevator,
