@@ -10,11 +10,10 @@ namespace Commercial_Controller
         public int amountOfFloors;
         public int amountOfElevators;
         public List<Elevator> elevatorsList;
-        public List<CallButton> callButtonsList;
-        public List<int> servedFloorsList;
+        public List<CallButton> callButtonsList;        
         public bool isBasement;
         
-        public Column(int _id, string _status, int _amountOfFloors, int _amountOfElevators, List<int> _servedFloors, bool _isBasement)
+        public Column(int _id, string _status, int _amountOfFloors, List<int>servedFloorsList, int _amountOfElevators, bool _isBasement)
         {
             this.ID = 1;
             this.status = _status;
@@ -22,7 +21,6 @@ namespace Commercial_Controller
             this.amountOfElevators = _amountOfElevators;
             this.elevatorsList = new List<Elevator>();
             this.callButtonsList = new List<CallButton>();
-            this.servedFloorsList = new List<int>();
             this.isBasement = _isBasement;
             this.createElevators(_amountOfFloors, _amountOfElevators);
             this.createCallButtons(_amountOfFloors, _isBasement);
