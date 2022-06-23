@@ -22,7 +22,7 @@ namespace Commercial_Controller
             this.amountOfElevators = _amountOfElevators;
             this.elevatorsList = new List<Elevator>();
             this.callButtonsList = new List<CallButton>();
-            this.servedFloorsList = _servedFloors;
+            this.servedFloorsList = new List<int>();
             this.isBasement = _isBasement;
             this.createElevators(_amountOfFloors, _amountOfElevators);
             this.createCallButtons(_amountOfFloors, _isBasement);

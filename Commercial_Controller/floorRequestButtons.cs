@@ -5,13 +5,13 @@ namespace Commercial_Controller
     {
         public int floorRequestButtonID;
         public string status;
-        public int floor;
+        public int buttonFloor;
         public string direction;
-        public FloorRequestButton(int _id, string _status, int _floor, string _direction)
+        public FloorRequestButton(int _id, string _status, int _buttonFloor, string _direction)
         {
             this.floorRequestButtonID = 1;
             this.status = _status;
-            this.floor =  _floor;
+            this.buttonFloor =  _buttonFloor;
             this.direction = _direction;
         }
     }
