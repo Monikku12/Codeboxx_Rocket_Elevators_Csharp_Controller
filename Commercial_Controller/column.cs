@@ -5,18 +5,18 @@ namespace Commercial_Controller
 {
     public class Column
     {
-        public int ID;
+        public int ID, amountOfFloors, amountOfElevators;
         public string status;
-        public int amountOfFloors;
-        public int amountOfElevators;
         public List<Elevator> elevatorsList;
-        public List<CallButton> callButtonsList;        
+        public List<CallButton> callButtonsList;
+        public List<int> servedFloorsList;
         public bool isBasement;
-        
-        public Column(int _id, string _status, int _amountOfFloors, List<int>servedFloorsList, int _amountOfElevators, bool _isBasement)
+
+        public Column(int _id, string _status, int _amountOfFloors, List<int> servedFloorsList, int _amountOfElevators, bool _isBasement)
         {
-            this.ID = 1;
+            this.ID = _id;
             this.status = _status;
+            this.servedFloorsList = servedFloorsList;
             this.amountOfFloors = _amountOfFloors;
             this.amountOfElevators = _amountOfElevators;
             this.elevatorsList = new List<Elevator>();
@@ -60,7 +60,7 @@ namespace Commercial_Controller
         }
 
 
-        
+
         // Simulate when a user press a button on a floor to go back to the first floor
         public Elevator requestElevator(int userPosition, string direction)
         {
@@ -89,7 +89,7 @@ namespace Commercial_Controller
                     {
                         bestElevatorInformations = this.checkIfElevatorIsBetter(1, elevator, bestElevatorInformations, requestedFloor);
                     }
-                     // The elevator is at the lobby and has no requests
+                    // The elevator is at the lobby and has no requests
                     else if (1 == elevator.currentFloor && elevator.status == "idle")
                     {
                         bestElevatorInformations = this.checkIfElevatorIsBetter(2, elevator, bestElevatorInformations, requestedFloor);
@@ -120,7 +120,7 @@ namespace Commercial_Controller
             {
                 foreach (Elevator elevator in this.elevatorsList)
                 {
-                // The elevator is at the same level as me, and is about to depart to the first floor
+                    // The elevator is at the same level as me, and is about to depart to the first floor
                     if (requestedFloor == elevator.currentFloor && elevator.status == "stopped" && requestedDirection == elevator.direction)
                     {
                         bestElevatorInformations = this.checkIfElevatorIsBetter(1, elevator, bestElevatorInformations, requestedFloor);
@@ -141,7 +141,7 @@ namespace Commercial_Controller
                         bestElevatorInformations = this.checkIfElevatorIsBetter(4, elevator, bestElevatorInformations, requestedFloor);
                     }
                     // The elevator is not available, but still could take the call if nothing better is found
-                    else 
+                    else
                     {
                         bestElevatorInformations = this.checkIfElevatorIsBetter(5, elevator, bestElevatorInformations, requestedFloor);
                     }
@@ -150,17 +150,17 @@ namespace Commercial_Controller
             return bestElevatorInformations.bestElevator;
         }
 
-        
+
 
 
         public BestElevatorInformations checkIfElevatorIsBetter(int scoreToCheck, Elevator newElevator, BestElevatorInformations bestElevatorInformations, int floor)
-        {            
+        {
             if (scoreToCheck < bestElevatorInformations.bestScore)
-                {
-                    bestElevatorInformations.bestScore = scoreToCheck;
-                    bestElevatorInformations.bestElevator = newElevator;
-                    bestElevatorInformations.referenceGap = Math.Abs(newElevator.currentFloor - floor);
-                }
+            {
+                bestElevatorInformations.bestScore = scoreToCheck;
+                bestElevatorInformations.bestElevator = newElevator;
+                bestElevatorInformations.referenceGap = Math.Abs(newElevator.currentFloor - floor);
+            }
             else if (bestElevatorInformations.bestScore == scoreToCheck)
             {
                 int gap = Math.Abs(newElevator.currentFloor - floor);
@@ -171,10 +171,10 @@ namespace Commercial_Controller
                 }
             }
             return bestElevatorInformations;
-        }    
+        }
     }
     public class BestElevatorInformations
-        {
+    {
         public Elevator bestElevator;
         public int bestScore;
         public int referenceGap;

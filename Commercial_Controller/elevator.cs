@@ -5,20 +5,15 @@ namespace Commercial_Controller
 {
     public class Elevator
     {
-        public int ID;
-        public string status;
+        public int ID, currentFloor, screenDisplay;
+        public string status, direction;
         public int amountOfFloors;
-        public int currentFloor;
         public Door door;
-        public List<int> floorRequestsList;
-        public string direction;
-        public bool overweight;
-        public bool obstruction;
-        public int screenDisplay;
-        public List<int> completedRequestsList;
+        public bool overweight, obstruction;
+        public List<int> completedRequestsList, floorRequestsList;
         public Elevator(int _id, string _status, int _amountOfFloors, int _currentFloor)
         {
-            this.ID = 1;
+            this.ID = _id;
             this.status = _status;
             this.amountOfFloors = _amountOfFloors;
             this.currentFloor = _currentFloor;
