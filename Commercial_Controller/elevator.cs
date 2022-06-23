@@ -10,11 +10,12 @@ namespace Commercial_Controller
         public int amountOfFloors;
         public int currentFloor;
         public Door door;
-        public List<int> floorRequestList;
+        public List<int> floorRequestsList;
         public string direction;
         public bool overweight;
         public bool obstruction;
         public int screenDisplay;
+        public List<int> completedRequestsList;
         public Elevator(int _id, string _status, int _amountOfFloors, int _currentFloor)
         {
             this.ID = 1;
@@ -22,17 +23,18 @@ namespace Commercial_Controller
             this.amountOfFloors = _amountOfFloors;
             this.currentFloor = _currentFloor;
             this.door = new Door(_id, "closed");
-            this.floorRequestList = new List<int>();
+            this.floorRequestsList = new List<int>();
             this.direction = null;
             this.overweight = false;
             this.obstruction = false;
             this.screenDisplay = 1;
+            this.completedRequestsList = new List<int>();
         }
         public void move()
         {
-        while (this.floorRequestList.Count != 0)
+        while (this.floorRequestsList.Count != 0)
             {
-                int destination = this.floorRequestList[0];
+                int destination = this.floorRequestsList[0];
                 this.status = "moving";
                 if (this.currentFloor < destination)
                 {
@@ -56,7 +58,8 @@ namespace Commercial_Controller
                 }
                 this.status = "stopped";
                 this.operateDoors();
-                this.floorRequestList.RemoveAt(0);                
+                this.completedRequestsList.Add(this.floorRequestsList[0]);
+                this.floorRequestsList.RemoveAt(0);                
             }
             this.status = "idle";
         }
@@ -65,11 +68,11 @@ namespace Commercial_Controller
         {
             if (this.direction == "up")
             {
-               this.floorRequestList.Sort();
+               this.floorRequestsList.Sort();
             }
             else
             {
-                this.floorRequestList.Reverse();
+                this.floorRequestsList.Reverse();
             }
         }
 
@@ -101,9 +104,9 @@ namespace Commercial_Controller
 
         public void addNewRequest(int requestedFloor)
         {
-        if (this.floorRequestList.Count != requestedFloor)
+        if (this.floorRequestsList.Count != requestedFloor)
             {
-                this.floorRequestList.Add(requestedFloor);
+                this.floorRequestsList.Add(requestedFloor);
             }
         if (this.currentFloor < requestedFloor)
             {

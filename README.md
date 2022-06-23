@@ -13,7 +13,11 @@ The code to run the scenarios is included in the Commercial_Controller folder, a
 
 To launch the tests, make sure to be at the root of the repository and run:
 
-`dotnet test`
+<!-- NEEDED INFO FOR README
+`dotnet run 1-- project Commercial_Controller.Tests/Commercial_Controller.Tests.csproj`
+`dotnet run 2-- project Commercial_Controller.Tests/Commercial_Controller.Tests.csproj`
+`dotnet run 3-- project Commercial_Controller.Tests/Commercial_Controller.Tests.csproj`
+`dotnet run 4-- project Commercial_Controller.Tests/Commercial_Controller.Tests.csproj` -->
 
 With a fully completed project, you should get an output like:
 
@@ -21,7 +25,8 @@ With a fully completed project, you should get an output like:
 
 You can also get more details about each test by adding the `-v n` flag: 
 
-`dotnet test -v n` 
+<!-- NEEDED INFO FOR README
+`dotnet test -v n` -->
 
 which should give something like: 
 
