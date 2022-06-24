@@ -15,13 +15,12 @@ namespace Commercial_Controller
         public Column(int _id, string _status, int _amountOfFloors, List<int> servedFloorsList, int _amountOfElevators, bool _isBasement)
         {
             this.ID = _id;
-            this.status = _status;
+            this.status = "idle";
             this.servedFloorsList = servedFloorsList;
             this.amountOfFloors = _amountOfFloors;
             this.amountOfElevators = _amountOfElevators;
             this.elevatorsList = new List<Elevator>();
             this.callButtonsList = new List<CallButton>();
-            this.isBasement = _isBasement;
             this.createElevators(_amountOfFloors, _amountOfElevators);
             this.createCallButtons(_amountOfFloors, _isBasement);
         }
@@ -87,32 +86,32 @@ namespace Commercial_Controller
                     // The elevator is at the lobby and already has some requests. It is about to leave but has not yet departed.
                     if (1 == elevator.currentFloor && elevator.status == "stopped")
                     {
-                        bestElevatorInformations = this.checkIfElevatorIsBetter(1, elevator, bestElevatorInformations, requestedFloor);
+                        bestElevatorInformations = checkIfElevatorIsBetter(1, elevator, bestElevatorInformations, requestedFloor);
                     }
                     // The elevator is at the lobby and has no requests
                     else if (1 == elevator.currentFloor && elevator.status == "idle")
                     {
-                        bestElevatorInformations = this.checkIfElevatorIsBetter(2, elevator, bestElevatorInformations, requestedFloor);
+                        bestElevatorInformations = checkIfElevatorIsBetter(2, elevator, bestElevatorInformations, requestedFloor);
                     }
                     // The elevator is lower than me and is coming up. It means that I'm requesting an elevator to go to a basement, and the elevator is on it's way to me.
                     else if (1 > elevator.currentFloor && elevator.direction == "up")
                     {
-                        bestElevatorInformations = this.checkIfElevatorIsBetter(3, elevator, bestElevatorInformations, requestedFloor);
+                        bestElevatorInformations = checkIfElevatorIsBetter(3, elevator, bestElevatorInformations, requestedFloor);
                     }
                     // The elevator is above me and is coming down. It means that I'm requesting an elevator to go to a floor, and the elevator is on it's way to me
                     else if (1 < elevator.currentFloor && elevator.direction == "down")
                     {
-                        bestElevatorInformations = this.checkIfElevatorIsBetter(3, elevator, bestElevatorInformations, requestedFloor);
+                        bestElevatorInformations = checkIfElevatorIsBetter(3, elevator, bestElevatorInformations, requestedFloor);
                     }
                     // The elevator is not at the first floor, but doesn't have any request
                     else if (elevator.status == "idle")
                     {
-                        bestElevatorInformations = this.checkIfElevatorIsBetter(4, elevator, bestElevatorInformations, requestedFloor);
+                        bestElevatorInformations = checkIfElevatorIsBetter(4, elevator, bestElevatorInformations, requestedFloor);
                     }
                     // The elevator is not available, but still could take the call if nothing better is found
                     else
                     {
-                        bestElevatorInformations = this.checkIfElevatorIsBetter(5, elevator, bestElevatorInformations, requestedFloor);
+                        bestElevatorInformations = checkIfElevatorIsBetter(5, elevator, bestElevatorInformations, requestedFloor);
                     }
                 }
             }
@@ -123,27 +122,27 @@ namespace Commercial_Controller
                     // The elevator is at the same level as me, and is about to depart to the first floor
                     if (requestedFloor == elevator.currentFloor && elevator.status == "stopped" && requestedDirection == elevator.direction)
                     {
-                        bestElevatorInformations = this.checkIfElevatorIsBetter(1, elevator, bestElevatorInformations, requestedFloor);
+                        bestElevatorInformations = checkIfElevatorIsBetter(1, elevator, bestElevatorInformations, requestedFloor);
                     }
                     // The elevator is lower than me and is going up. I'm on a basement, and the elevator can pick me up on it's way
                     else if (requestedFloor > elevator.currentFloor && elevator.direction == "up" && requestedDirection == "up")
                     {
-                        bestElevatorInformations = this.checkIfElevatorIsBetter(2, elevator, bestElevatorInformations, requestedFloor);
+                        bestElevatorInformations = checkIfElevatorIsBetter(2, elevator, bestElevatorInformations, requestedFloor);
                     }
                     // The elevator is higher than me and is going down. I'm on a floor, and the elevator can pick me up on it's way
                     else if (requestedFloor < elevator.currentFloor && elevator.direction == "down" && requestedDirection == "down")
                     {
-                        bestElevatorInformations = this.checkIfElevatorIsBetter(2, elevator, bestElevatorInformations, requestedFloor);
+                        bestElevatorInformations = checkIfElevatorIsBetter(2, elevator, bestElevatorInformations, requestedFloor);
                     }
                     // The elevator is idle and has no requests
                     else if (elevator.status == "idle")
                     {
-                        bestElevatorInformations = this.checkIfElevatorIsBetter(4, elevator, bestElevatorInformations, requestedFloor);
+                        bestElevatorInformations = checkIfElevatorIsBetter(4, elevator, bestElevatorInformations, requestedFloor);
                     }
                     // The elevator is not available, but still could take the call if nothing better is found
                     else
                     {
-                        bestElevatorInformations = this.checkIfElevatorIsBetter(5, elevator, bestElevatorInformations, requestedFloor);
+                        bestElevatorInformations = checkIfElevatorIsBetter(5, elevator, bestElevatorInformations, requestedFloor);
                     }
                 }
             }
@@ -176,8 +175,7 @@ namespace Commercial_Controller
     public class BestElevatorInformations
     {
         public Elevator bestElevator;
-        public int bestScore;
-        public int referenceGap;
+        public int bestScore, referenceGap;
 
         public BestElevatorInformations()
         {

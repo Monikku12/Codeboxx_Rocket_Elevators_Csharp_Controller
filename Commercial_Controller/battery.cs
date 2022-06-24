@@ -13,44 +13,40 @@ namespace Commercial_Controller
         public List<Column> columnsList;
         public List<FloorRequestButton> floorRequestsButtonsList;
 
-        public Battery(int _id, int _amountOfColumns, int _amountOfFloors, int _amountOfBasements, int _amountOfElevators)
+        public Battery(int _id, int _amountOfColumns, int _amountOfFloors, int _amountOfBasements, int _amountOfElevatorPerColumn)
         {
             this.ID = _id;
             this.status = "online";
             this.columnsList = new List<Column>();
             this.floorRequestsButtonsList = new List<FloorRequestButton>();
-            // this.servedFloorsList = new List<int>();
-            // this.column = new Column(ID, status, _amountOfFloors, servedFloorsList, _amountOfElevators, _isBasement);
-            // this.elevator = new Elevator(_id, status, _amountOfFloors, _currentFloor);
 
             if (_amountOfBasements > 0)
             {
                 this.createBasementFloorRequestButtons(_amountOfBasements);
-                this.createBasementColumn(_amountOfBasements, _amountOfElevators);
+                this.createBasementColumn(_amountOfBasements, _amountOfElevatorPerColumn);
                 _amountOfColumns--;
             }
             this.createFloorRequestButtons(_amountOfFloors);
-            this.createColumns(_amountOfColumns, _amountOfFloors, _amountOfBasements, _amountOfElevators);
-            // this.findBestColumn(_requestedFloor);
+            this.createColumns(_amountOfColumns, _amountOfFloors, _amountOfBasements, _amountOfElevatorPerColumn);
 
         }
 
 
 
-        public void createBasementColumn(int _amountOfBasements, int _amountOfElevatorsPerColumn)
+        public void createBasementColumn(int _amountOfBasements, int _amountOfElevatorPerColumn)
         {
-            List<int> servedBasementFloors = new List<int>();
+            List<int> servedFloorsList = new List<int>();
             int floor = -1;
             for (int i = 0; i < _amountOfBasements; i++)
             {
-                servedBasementFloors.Add(floor);
+                servedFloorsList.Add(floor);
                 floor--;
             }
-            Column column = new Column(ID, "online", _amountOfBasements, servedBasementFloors, _amountOfElevators, true);
+            Column column = new Column(ID, "online", _amountOfBasements, servedFloorsList, _amountOfElevatorPerColumn, true);
             this.columnsList.Add(column);
         }
 
-        public void createColumns(int _amountOfColumns, int _amountOfFloors, int _amountOfBasements, int _amountOfElevators)
+        public void createColumns(int _amountOfColumns, int _amountOfFloors, int _amountOfBasements, int _amountOfElevatorPerColumn)
         {
             double d = _amountOfFloors / _amountOfColumns;
             int amountOfFloorsPerColumn = (int)Math.Ceiling(d);
@@ -68,9 +64,8 @@ namespace Commercial_Controller
                     }
                 }
 
-                Column column = new Column(i, "online", _amountOfFloors, servedFloors, _amountOfElevators, false);
+                Column column = new Column(i + 1, "online", _amountOfFloors, servedFloors, _amountOfElevatorPerColumn, false);
                 this.columnsList.Add(column);
-                // i++;
             }
         }
 
@@ -80,7 +75,7 @@ namespace Commercial_Controller
             int buttonFloor = 1;
             for (int i = 0; i < _amountOfFloors; i++)
             {
-                FloorRequestButton floorRequestButton = new FloorRequestButton(i + 1, "OFF", buttonFloor, "Up");
+                FloorRequestButton floorRequestButton = new FloorRequestButton(i, "OFF", buttonFloor, "Up");
                 this.floorRequestsButtonsList.Add(floorRequestButton);
                 buttonFloor++;
             }
@@ -91,7 +86,7 @@ namespace Commercial_Controller
             int buttonFloor = -1;
             for (int i = 0; i < _amountOfBasements; i++)
             {
-                FloorRequestButton floorRequestButton = new FloorRequestButton(i + 1, "OFF", buttonFloor, "Down");
+                FloorRequestButton floorRequestButton = new FloorRequestButton(i, "OFF", buttonFloor, "Down");
                 this.floorRequestsButtonsList.Add(floorRequestButton);
                 buttonFloor--;
             }

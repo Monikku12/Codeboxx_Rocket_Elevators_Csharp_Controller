@@ -5,24 +5,23 @@ namespace Commercial_Controller
 {
     public class Elevator
     {
-        public int ID, currentFloor, screenDisplay;
+        public int ID, currentFloor, amountOfFloors;
         public string status, direction;
-        public int amountOfFloors;
         public Door door;
         public bool overweight, obstruction;
         public List<int> completedRequestsList, floorRequestsList;
         public Elevator(int _id, string _status, int _amountOfFloors, int _currentFloor)
         {
             this.ID = _id;
-            this.status = _status;
+            this.status = "idle";
             this.amountOfFloors = _amountOfFloors;
             this.currentFloor = _currentFloor;
             this.door = new Door(_id, "closed");
             this.floorRequestsList = new List<int>();
-            this.direction = null;
-            this.overweight = false;
-            this.obstruction = false;
-            this.screenDisplay = 1;
+            // this.direction = null;
+            // this.overweight = false;
+            // this.obstruction = false;
+            // this.screenDisplay = 1;
             this.completedRequestsList = new List<int>();
         }
         public void move()
@@ -38,17 +37,17 @@ namespace Commercial_Controller
                    while (this.currentFloor < destination)
                    {
                     this.currentFloor++;
-                    this.screenDisplay = this.currentFloor;
+                    int screenDisplay = this.currentFloor;
                    }
                 }
                 else if (this.currentFloor > destination)
                 {
                     this.direction = "down";
                     this.sortFloorList();
-                    while (this.currentFloor < destination)
+                    while (this.currentFloor > destination)
                     {
                         this.currentFloor--;
-                        this.screenDisplay = this.currentFloor;
+                        int screenDisplay = this.currentFloor;
                     }
                 }
                 this.status = "stopped";
@@ -99,7 +98,7 @@ namespace Commercial_Controller
 
         public void addNewRequest(int requestedFloor)
         {
-        if (this.floorRequestsList.Count != requestedFloor)
+        if (this.floorRequestsList.Contains(requestedFloor) == false)
             {
                 this.floorRequestsList.Add(requestedFloor);
             }
