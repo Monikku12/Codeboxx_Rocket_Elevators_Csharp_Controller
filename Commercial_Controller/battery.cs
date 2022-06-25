@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace Commercial_Controller
 {
+    // A battery including the elevators columns 
     public class Battery
     {
         public int ID, _amountOfElevators, _currentFloor;
@@ -32,7 +33,7 @@ namespace Commercial_Controller
         }
 
 
-
+        // Creates the column in charge of the basement floors.
         public void createBasementColumn(int _amountOfBasements, int _amountOfElevatorPerColumn)
         {
             List<int> servedFloorsList = new List<int>();
@@ -46,6 +47,7 @@ namespace Commercial_Controller
             this.columnsList.Add(column);
         }
 
+        // Creates the column in charge of the upper floors.
         public void createColumns(int _amountOfColumns, int _amountOfFloors, int _amountOfBasements, int _amountOfElevatorPerColumn)
         {
             double d = _amountOfFloors / _amountOfColumns;
@@ -69,7 +71,7 @@ namespace Commercial_Controller
             }
         }
 
-
+        // Creates the central panel in the lobby to call an elevator to go to a specific upper floor.
         public void createFloorRequestButtons(int _amountOfFloors)
         {
             int buttonFloor = 1;
@@ -81,6 +83,7 @@ namespace Commercial_Controller
             }
         }
 
+        // Creates the central panel in the lobby to call an elevator to go to a specific basement floor.
         public void createBasementFloorRequestButtons(int _amountOfBasements)
         {
             int buttonFloor = -1;
@@ -92,6 +95,7 @@ namespace Commercial_Controller
             }
         }
 
+        // Function in charge of finding the best elevator to pick up a user
         public Column findBestColumn(int _requestedFloor)
         {
             Column bestColumn = columnsList[0];
@@ -103,8 +107,6 @@ namespace Commercial_Controller
                     bestColumn = column;
                 }
             }
-
-
             return bestColumn;
         }
 

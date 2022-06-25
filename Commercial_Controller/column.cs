@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 
+// Elevators' column
 namespace Commercial_Controller
 {
     public class Column
@@ -25,6 +26,7 @@ namespace Commercial_Controller
             this.createCallButtons(_amountOfFloors, _isBasement);
         }
 
+        // Creates the buttons outside the elevators to call them
         public void createCallButtons(int _amountOfFloors, bool _isBasement)
         {
             if (_isBasement)
@@ -49,6 +51,7 @@ namespace Commercial_Controller
             }
         }
 
+        // Creates the elevators in the columns
         public void createElevators(int _amountOfFloors, int _amountOfElevators)
         {
             for (int i = 0; i < _amountOfElevators; i++)
@@ -151,7 +154,7 @@ namespace Commercial_Controller
 
 
 
-
+        // Compare the elevators score to choose the best one
         public BestElevatorInformations checkIfElevatorIsBetter(int scoreToCheck, Elevator newElevator, BestElevatorInformations bestElevatorInformations, int floor)
         {
             if (scoreToCheck < bestElevatorInformations.bestScore)
@@ -172,6 +175,7 @@ namespace Commercial_Controller
             return bestElevatorInformations;
         }
     }
+    
     public class BestElevatorInformations
     {
         public Elevator bestElevator;

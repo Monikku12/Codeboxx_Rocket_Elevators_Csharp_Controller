@@ -1,5 +1,6 @@
 namespace Commercial_Controller
 {
+    // Doors of the elevators
     public class Door
     {
         public int ID;
